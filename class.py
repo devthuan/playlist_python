@@ -16,17 +16,29 @@ def get_data():
 
     return student
     
+def get_many_data():
+    students = []
+    total = int(input("Enter total student: "))
+    for i in range(total):
+        studs = get_data()
+        students.append(studs)
+
+    return students
 
 def print_info(data):
+    print("----------------- \n")
     print("Name: ", data.name)
     print("ID student: ", data.id_stud)
     print("major: ", data.major)
 
+def print_infos(stud):    
+    for i in range(len(stud)):
+        print_info(stud[i])
 
 
 def main():
-    stud = get_data()
+    stud = get_many_data()
 
-    print_info(stud)
+    print_infos(stud)
 
 main()
