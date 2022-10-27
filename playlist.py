@@ -1,85 +1,65 @@
-
-from turtle import title
-
-
+# Group class
 class Video():
-    def __init__(self, title, link):
-        self.title = title
-        self.link = link
+    def __init__(self, video_title, video_link):
+        self.video_title = video_title
+        self.video_link = video_link
 
-class Playlist():
-    def __init__(self, name, description, rating, videos):
-        self.name = name
-        self.description = description
-        self.rating = rating
-        self.videos = videos
-
-def read_video():
-    title = input("Enter title of video: " )
-    link = input("Enter link of video: " )
+# Group get data from user
+def get_data_from_user():
+    title = input("Enter title video: ")
+    link = input("Enter link video: ")
     video = Video(title, link)
     return video
 
-def read_videos():
+def get_many_data_form_user():
     videos = []
-    total = int(input("Enter total video: " + "\n"))
+    total = int(input("Enter total video: "))
     for i in range(total):
-        vid = read_video()
-        videos.append(vid)
+       video = get_data_from_user()
+       videos.append(video)
     return videos
 
-def print_video(video):
-    print("---------------\n" )
-    print(" video title: ", video.title )
-    print(" video link: ", video.link )
+# Group print info to screen
+def print_info(data):
+    print("Title video: ", data.video_title)
+    print("link video: ", data.video_link)
 
-def print_videos(videos):
-    for i in range(len(videos)):
-        print_video(videos[i])
+def print_many_info(data):
+    print("------------ \n")
+    for i in range(len(data)):
+        print_info(data[i])
 
-def write_video_txt(videos, file):
-    file.write((videos.title) + "\n")
-    file.write(videos.link + "\n")
+# Group write data to file txt
+def write_data_to_txt(video, file):
+        file.write(video.video_title + "\n")
+        file.write(video.video_link + "\n")
 
-def write_to_txt(videos, file):
-    total = len(videos)
-    # with open("data.txt", "w") as file:
-    file.write(str(total) + "\n")
-    for i in range(total):
-        write_video_txt(videos[i], file)
+def write_many_data_to_txt(data):
+    with open("playlist.txt", "w") as file:
+        for i in range(len(data)):
+            write_data_to_txt(data[i], file)
 
-def read_playlist():
-    name = input("Enter name video: ")
-    description = input("Enter description video: ")
-    rating = input("rating video (1-5) star: ")
-    videos = read_videos()
-    playlist = Playlist(name, description, rating, videos)
-    return playlist
+# Group read data in file txt
+def read_data_in_txt(file):
+    title = file.readline()
+    link = file.readline()
+    video = Video(title, link)
+    return video
 
-def print_playlist(list):
-    print("name video: ", list.name)
-    print("description video: ", list.description)
-    print("rating video: ", list.rating)
-
-def write_playlist_txt(playlist):
-    with open("data.txt", "w") as file:
-        file.write((playlist.name)+ "\n")
-        file.write((playlist.description)+ "\n")
-        file.write((playlist.rating)+ "\n")
-        write_to_txt(playlist.videos, file)
-    print("Successfully write playlist to txt")
-
-# def read_playlist_from_txt(playlist):
-#     pass
-
+def read_many_data_in_txt():
+    videos = []
+    with open("playlist.txt", "r") as file:
+        total = file.readline()
+        for i in range(int(total)):
+            video = read_data_in_txt(file)
+            videos.append(video)
+        return videos
 
 def main():
-    # videos= read_videos()
-    # write_to_txt(videos)
-    # print_videos(videos)
-    playlist = read_playlist()
-    write_playlist_txt(playlist)
-    # playlist = read_playlist_from_txt()
-    # print_playlist(playlist)
+    videos = get_many_data_form_user()
+    write_many_data_to_txt(videos)
+    videos = read_many_data_in_txt()
+    print_many_info(videos)
+    
 
 main()
